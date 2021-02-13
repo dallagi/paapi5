@@ -9,11 +9,9 @@ defmodule Paapi5 do
     defstruct [:method, :url, :body, :headers]
   end
 
-  def request(access_key, secret_key, partner_tag, _marketplace, operation, payload) do
-    host = "webservices.amazon.it"
-    region = "eu-west-1"
-
-    endpoint = "https://#{host}/paapi5/searchitems"
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload) do
+    marketplace = Paapi5.Marketplace.of(marketplace)
+    endpoint = "https://#{marketplace.host}/paapi5/searchitems"
     headers = %{
       # "host" => @host,
       # "content-type" => "application/json; charset=UTF-8",
@@ -24,7 +22,6 @@ defmodule Paapi5 do
     payload = %{
       "PartnerTag" => partner_tag,
       "PartnerType" => "Associates",
-      "Marketplace" => "www.amazon.it",
       "Operation" => operation
     } |> Map.merge(payload)
 
@@ -37,7 +34,7 @@ defmodule Paapi5 do
         secret_key,
         "POST",
         endpoint,
-        region,
+        marketplace.region,
         @service,
         encoded_payload,
         headers,

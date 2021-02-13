@@ -22,7 +22,7 @@ defmodule Paapi5Test do
     assert %{
              "SearchResult" => %{
                "Items" => [
-                 %{"ASIN" => _asin, "DetailPageUrl" => "https://www.amazon." <> _rest_url}
+                 %{"ASIN" => _asin, "DetailPageURL" => "https://www.amazon." <> _rest_url}
                  | _rest_items
                ]
              }
