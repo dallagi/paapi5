@@ -12,18 +12,19 @@ defmodule Paapi5 do
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload) do
     marketplace = Paapi5.Marketplace.of(marketplace)
     endpoint = "https://#{marketplace.host}/paapi5/searchitems"
+
     headers = %{
-      # "host" => @host,
-      # "content-type" => "application/json; charset=UTF-8",
       "x-amz-target" => "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-      "content-encoding" => "amz-1.0",
+      "content-encoding" => "amz-1.0"
     }
 
-    payload = %{
-      "PartnerTag" => partner_tag,
-      "PartnerType" => "Associates",
-      "Operation" => operation
-    } |> Map.merge(payload)
+    payload =
+      %{
+        "PartnerTag" => partner_tag,
+        "PartnerType" => "Associates",
+        "Operation" => operation
+      }
+      |> Map.merge(payload)
 
     current_time = DateTime.utc_now() |> DateTime.to_naive()
     encoded_payload = Jason.encode!(payload)

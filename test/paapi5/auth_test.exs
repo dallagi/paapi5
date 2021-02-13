@@ -28,8 +28,14 @@ defmodule Paapi5.AuthTest do
     request_parts = String.split(request_parts, ",") |> Enum.map(&String.split(&1, "="))
 
     assert request_parts == [
-             ["Credential", "AKIAIOSFODNN7EXAMPLE/20130524/eu-west-1/ProductAdvertisingAPI/aws4_request"],
-             ["SignedHeaders", "content-encoding;date;host;x-amz-content-sha256;x-amz-date;x-amz-target"],
+             [
+               "Credential",
+               "AKIAIOSFODNN7EXAMPLE/20130524/eu-west-1/ProductAdvertisingAPI/aws4_request"
+             ],
+             [
+               "SignedHeaders",
+               "content-encoding;date;host;x-amz-content-sha256;x-amz-date;x-amz-target"
+             ],
              ["Signature", "0d498722be0f482804e18f323971fc128e8f2430d64fbc4651a2085ebfce743e"]
            ]
   end

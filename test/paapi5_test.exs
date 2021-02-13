@@ -19,6 +19,7 @@ defmodule Paapi5Test do
     response = HTTPoison.request!(request.method, request.url, request.body, request.headers)
 
     assert response.status_code == 200
+
     assert %{
              "SearchResult" => %{
                "Items" => [

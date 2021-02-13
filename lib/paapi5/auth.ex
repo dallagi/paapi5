@@ -49,9 +49,10 @@ defmodule Paapi5.Auth do
       |> Enum.join(";")
 
     auth_header =
-      "AWS4-HMAC-SHA256 Credential=#{access_key}/#{scope},SignedHeaders=#{signed_headers},Signature=#{
-        signature
-      }"
+      "AWS4-HMAC-SHA256 " <>
+        "Credential=#{access_key}/#{scope}," <>
+        "SignedHeaders=#{signed_headers}," <>
+        "Signature=#{signature}"
 
     headers
     |> Map.put("authorization", auth_header)
@@ -77,9 +78,8 @@ defmodule Paapi5.Auth do
       |> Enum.map(fn segment -> URI.encode_www_form(segment) end)
       |> Enum.join("/")
 
-    "#{http_method}\n#{encoded_path}\n#{query_params}\n#{header_params}\n\n#{signed_header_params}\n#{
-      hashed_payload
-    }"
+    "#{http_method}\n#{encoded_path}\n#{query_params}\n#{header_params}" <>
+      "\n\n#{signed_header_params}\n#{hashed_payload}"
   end
 
   defp build_string_to_sign(canonical_request, timestamp, scope) do
