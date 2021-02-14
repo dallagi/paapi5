@@ -1,4 +1,8 @@
 defmodule Paapi5.Marketplace do
+  @moduledoc false
+
+  @type t() :: %__MODULE__{host: String.t(), region: String.t()}
+  @enforce_keys [:host, :region]
   defstruct [:host, :region]
 
   # source: https://webservices.amazon.com/paapi5/documentation/common-request-parameters.html#host-and-region
@@ -23,6 +27,7 @@ defmodule Paapi5.Marketplace do
     {:us, "webservices.amazon.com", "us-east-1"}
   ]
 
+  @spec of(atom()) :: Paapi5.Marketplace.t() | nil
   def of(marketplace_id) do
     case known_marketplace_by(marketplace_id) do
       {_id, host, region} -> %__MODULE__{host: host, region: region}

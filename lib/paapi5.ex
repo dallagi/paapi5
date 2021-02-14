@@ -2,20 +2,19 @@ defmodule Paapi5 do
   @moduledoc """
   Documentation for `Paapi5`.
   """
+  alias Paapi5.Marketplace
 
   @service "ProductAdvertisingAPI"
 
-  defmodule Request do
-    defstruct [:method, :url, :body, :headers]
-  end
-
+  @spec request(String.t(), String.t(), String.t(), atom | Marketplace.t(), String.t(), map) ::
+          Request.t()
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload)
       when is_atom(marketplace) do
     request(
       access_key,
       secret_key,
       partner_tag,
-      Paapi5.Marketplace.of(marketplace),
+      Marketplace.of(marketplace),
       operation,
       payload
     )
