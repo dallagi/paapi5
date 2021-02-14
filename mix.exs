@@ -1,13 +1,26 @@
 defmodule Paapi5.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/dallagi/paapi5"
+  @version "0.1.0"
+
   def project do
     [
       app: :paapi5,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: [
+        links: %{"GitHub" => @source_url},
+        licenses: ["MIT"]
+      ],
+      docs: [
+        main: "readme",
+        extras: ["README.md", "LICENSE"],
+        source_ref: "v#{@version}",
+        source_url: @source_url
+      ]
     ]
   end
 
@@ -21,9 +34,8 @@ defmodule Paapi5.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:jason, "~> 1.2"},
       {:httpoison, "~> 1.8", only: [:dev, :test]}

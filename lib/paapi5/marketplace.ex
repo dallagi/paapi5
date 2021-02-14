@@ -1,5 +1,10 @@
 defmodule Paapi5.Marketplace do
-  @moduledoc false
+  @moduledoc """
+  An Amazon Marketplace.
+
+  For a reference about available marketplaces, and their hosts and regions, see
+  [the PAAPI5 doc](https://webservices.amazon.com/paapi5/documentation/common-request-parameters.html#host-and-region).
+  """
 
   @type t() :: %__MODULE__{host: String.t(), region: String.t()}
   @enforce_keys [:host, :region]
