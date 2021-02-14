@@ -3,24 +3,30 @@ defmodule Paapi5 do
   Documentation for `Paapi5`.
   """
   alias Paapi5.Marketplace
+  alias Paapi5.Request
 
   @service "ProductAdvertisingAPI"
+  @current_time DateTime.utc_now() |> DateTime.to_naive()
 
-  @spec request(String.t(), String.t(), String.t(), atom | Marketplace.t(), String.t(), map) ::
+  @spec request(
+          String.t(),
+          String.t(),
+          String.t(),
+          atom | Marketplace.t(),
+          String.t(),
+          map,
+          NaiveDateTime.t()
+        ) ::
           Request.t()
-  def request(access_key, secret_key, partner_tag, marketplace, operation, payload)
+
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time \\ @current_time)
+
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time)
       when is_atom(marketplace) do
-    request(
-      access_key,
-      secret_key,
-      partner_tag,
-      Marketplace.of(marketplace),
-      operation,
-      payload
-    )
+    request(access_key, secret_key, partner_tag, Marketplace.of(marketplace), operation, payload, request_time)
   end
 
-  def request(access_key, secret_key, partner_tag, marketplace, operation, payload) do
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time) do
     endpoint = "https://#{marketplace.host}/paapi5/searchitems"
 
     headers = %{
@@ -36,7 +42,6 @@ defmodule Paapi5 do
       }
       |> Map.merge(payload)
 
-    current_time = DateTime.utc_now() |> DateTime.to_naive()
     encoded_payload = Jason.encode!(payload)
 
     signed_header =
@@ -49,7 +54,7 @@ defmodule Paapi5 do
         @service,
         encoded_payload,
         headers,
-        current_time
+        request_time
       )
 
     headers = [{"content-type", "application/json; charset=UTF-8"} | signed_header]

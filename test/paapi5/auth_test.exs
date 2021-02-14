@@ -22,8 +22,7 @@ defmodule Paapi5.AuthTest do
         @time
       )
 
-    {"authorization", "AWS4-HMAC-SHA256 " <> request_parts} =
-      signed_request |> List.keyfind("authorization", 0)
+    {"authorization", "AWS4-HMAC-SHA256 " <> request_parts} = signed_request |> List.keyfind("authorization", 0)
 
     request_parts = String.split(request_parts, ",") |> Enum.map(&String.split(&1, "="))
 
