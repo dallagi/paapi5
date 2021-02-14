@@ -2,8 +2,7 @@ defmodule Paapi5 do
   @moduledoc """
   Documentation for `Paapi5`.
   """
-  alias Paapi5.Marketplace
-  alias Paapi5.Request
+  alias Paapi5.{Marketplace, Request}
 
   @service "ProductAdvertisingAPI"
   @current_time DateTime.utc_now() |> DateTime.to_naive()
@@ -35,12 +34,14 @@ defmodule Paapi5 do
     }
 
     payload =
-      %{
-        "PartnerTag" => partner_tag,
-        "PartnerType" => "Associates",
-        "Operation" => operation
-      }
-      |> Map.merge(payload)
+      Map.merge(
+        payload,
+        %{
+          "PartnerTag" => partner_tag,
+          "PartnerType" => "Associates",
+          "Operation" => operation
+        }
+      )
 
     encoded_payload = Jason.encode!(payload)
 
