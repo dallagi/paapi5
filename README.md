@@ -1,11 +1,10 @@
 # Paapi5
 
-A simple client for Amazon Product Advertising Api 5.
+ A minimalistic Elixir library for the Amazon Product Advertising Api version 5.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `paapi5` to your list of dependencies in `mix.exs`:
+This package can be installed by adding `paapi5` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +14,28 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/paapi5](https://hexdocs.pm/paapi5).
+## Usage
 
+Build a signed request for the Amazon Product Advertising API 5 (PAAPI5):
+
+```elixir
+  request =
+    Paapi5.request(
+      @access_key,
+      @secret_key,
+      @partner_tag,
+      :us,
+      "SearchItems",
+      %{"Keywords" => "elixir in action"}
+    )
+```
+
+You can then use a HTTP client of your choice to actually send this request, e.g.:
+
+```elixir
+  items = HTTPoison.request!(request.method, request.url, request.body, request.headers)
+```
+
+The marketplace can either be an atom (e.g., `:us`, `:it`, `:uk`, etc.) or a `Paapi5.Marketplace` struct
+with the host and region (e.g., `%Paapi5.Marketplace{host: "webservices.amazon.it", region: "eu-west-1"}`).
+The known marketplaces are `:au`, `:br`, `:ca`, `:fr`, `:de`, `:in`, `:it`, `:jp`, `:mx`, `:nl`, `:sg`, `:sa`, `:es`, `:se`, `:tr`, `:ae`, `:uk`, `:us`.
