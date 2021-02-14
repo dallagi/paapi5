@@ -1,6 +1,7 @@
 defmodule Paapi5.Auth do
   @moduledoc false
 
+  # credo:disable-for-next-line Credo.Check.Refactor.FunctionArity
   def sign(
         access_key,
         secret_key,
