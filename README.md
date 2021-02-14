@@ -43,3 +43,21 @@ The known marketplaces are `:au`, `:br`, `:ca`, `:fr`, `:de`, `:in`, `:it`, `:jp
 For a reference about operations and their parameters, see [the PAAPI5 documentation](https://webservices.amazon.com/paapi5/documentation/operations.html).
 
 For working examples on usage of this library, see the [tests](https://github.com/dallagi/paapi5/blob/main/test/paapi5_test.exs).
+
+## Development
+
+Issues and contributions are very welcome!
+
+To launch tests, run:
+
+```bash
+mix test
+```
+
+Tests require a valid set of credentials for the **Italian** PAAPI to be passed via environment variables:
+
+```bash
+export ACCESS_KEY="your-paapi-access-key"
+export SECRET_KEY="your-paapi-secret-key"
+export PARTNER_TAG="your-paapi-partner-tag"
+```
