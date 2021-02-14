@@ -39,3 +39,7 @@ You can then use a HTTP client of your choice to actually send this request, e.g
 The marketplace can either be an atom (e.g., `:us`, `:it`, `:uk`, etc.) or a `Paapi5.Marketplace` struct
 with the host and region (e.g., `%Paapi5.Marketplace{host: "webservices.amazon.it", region: "eu-west-1"}`).
 The known marketplaces are `:au`, `:br`, `:ca`, `:fr`, `:de`, `:in`, `:it`, `:jp`, `:mx`, `:nl`, `:sg`, `:sa`, `:es`, `:se`, `:tr`, `:ae`, `:uk`, `:us`.
+
+For a reference about operations and their parameters, see [the PAAPI5 documentation](https://webservices.amazon.com/paapi5/documentation/operations.html).
+
+For working examples on usage of this library, see the [tests](https://github.com/dallagi/paapi5/blob/main/test/paapi5_test.exs).

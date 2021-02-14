@@ -1,6 +1,6 @@
 defmodule Paapi5 do
   @moduledoc """
-  Documentation for `Paapi5`.
+  Functions to build and sign requests for the Amazon Product Advertising Api 5.
   """
   alias Paapi5.{Marketplace, Request}
 
@@ -19,6 +19,14 @@ defmodule Paapi5 do
         ) ::
           Request.t()
 
+  @doc """
+  Builds a signed request for the Amazon Product Advertising API 5.
+
+  Marketplace can either be an atom (e.g., `it`, `uk`, etc.) or a `Paapi5.Marketplace` struct
+  (e.g., `%Paapi5.Marketplace{host: "webservices.amazon.it", region: "eu-west-1"}`)
+
+  For a reference about operations and their parameters, see [the PAAPI documentation](https://webservices.amazon.com/paapi5/documentation/operations.html)
+  """
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time \\ current_time())
 
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time)
