@@ -5,7 +5,8 @@ defmodule Paapi5 do
   alias Paapi5.{Marketplace, Request}
 
   @service "ProductAdvertisingAPI"
-  @current_time DateTime.utc_now() |> DateTime.to_naive()
+  @http_method "POST"
+  @content_type_header {"content-type", "application/json; charset=UTF-8"}
 
   @spec request(
           String.t(),
@@ -18,7 +19,7 @@ defmodule Paapi5 do
         ) ::
           Request.t()
 
-  def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time \\ @current_time)
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time \\ current_time())
 
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time)
       when is_atom(marketplace) do
@@ -26,45 +27,50 @@ defmodule Paapi5 do
   end
 
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time) do
-    endpoint = "https://#{marketplace.host}/paapi5/#{String.downcase(operation)}"
+    url = url_for(marketplace, operation)
 
-    headers = %{
-      "x-amz-target" => "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.#{operation}",
-      "content-encoding" => "amz-1.0"
-    }
-
-    payload =
-      Map.merge(
-        payload,
-        %{
-          "PartnerTag" => partner_tag,
-          "PartnerType" => "Associates",
-          "Operation" => operation
-        }
-      )
-
-    encoded_payload = Jason.encode!(payload)
+    encoded_payload =
+      payload_for(payload, partner_tag, operation)
+      |> Jason.encode!()
 
     signed_header =
       Paapi5.Auth.sign(
         access_key,
         secret_key,
-        "POST",
-        endpoint,
+        @http_method,
+        url,
         marketplace.region,
         @service,
         encoded_payload,
-        headers,
+        headers_to_sign_for(operation),
         request_time
       )
 
-    headers = [{"content-type", "application/json; charset=UTF-8"} | signed_header]
+    headers = [@content_type_header | signed_header]
 
     %Request{
-      method: "POST",
-      url: endpoint,
+      method: @http_method,
+      url: url,
       body: encoded_payload,
       headers: headers
     }
   end
+
+  defp url_for(marketplace, operation), do: "https://#{marketplace.host}/paapi5/#{String.downcase(operation)}"
+
+  defp headers_to_sign_for(operation) do
+    %{
+      "x-amz-target" => "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.#{operation}",
+      "content-encoding" => "amz-1.0"
+    }
+  end
+
+  defp payload_for(payload, partner_tag, operation) do
+    payload
+    |> Map.put("PartnerTag", partner_tag)
+    |> Map.put("PartnerType", "Associates")
+    |> Map.put("Operation", operation)
+  end
+
+  defp current_time, do: DateTime.utc_now() |> DateTime.to_naive()
 end
