@@ -29,4 +29,22 @@ defmodule Paapi5Test do
              }
            } = response.body |> Jason.decode!()
   end
+
+  test "accepts custom marketplaces" do
+    marketplace = %Paapi5.Marketplace{host: "webservices.amazon.it", region: "eu-west-1"}
+
+    request =
+      Paapi5.request(
+        @access_key,
+        @secret_key,
+        @partner_tag,
+        marketplace,
+        "SearchItems",
+        %{"Keywords" => "das kapital"}
+      )
+
+    response = HTTPoison.request!(request.method, request.url, request.body, request.headers)
+
+    assert response.status_code == 200
+  end
 end

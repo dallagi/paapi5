@@ -9,8 +9,19 @@ defmodule Paapi5 do
     defstruct [:method, :url, :body, :headers]
   end
 
+  def request(access_key, secret_key, partner_tag, marketplace, operation, payload)
+      when is_atom(marketplace) do
+    request(
+      access_key,
+      secret_key,
+      partner_tag,
+      Paapi5.Marketplace.of(marketplace),
+      operation,
+      payload
+    )
+  end
+
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload) do
-    marketplace = Paapi5.Marketplace.of(marketplace)
     endpoint = "https://#{marketplace.host}/paapi5/searchitems"
 
     headers = %{
