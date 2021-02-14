@@ -24,9 +24,9 @@ Build a signed request for the Amazon Product Advertising API 5 (PAAPI5):
 ```elixir
   request =
     Paapi5.request(
-      @access_key,
-      @secret_key,
-      @partner_tag,
+      "<access_key>",
+      "<secret_key>",
+      "<partner_tag>",
       :us,
       "SearchItems",
       %{"Keywords" => "elixir in action"}
