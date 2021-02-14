@@ -26,10 +26,10 @@ defmodule Paapi5 do
   end
 
   def request(access_key, secret_key, partner_tag, marketplace, operation, payload, request_time) do
-    endpoint = "https://#{marketplace.host}/paapi5/searchitems"
+    endpoint = "https://#{marketplace.host}/paapi5/#{String.downcase(operation)}"
 
     headers = %{
-      "x-amz-target" => "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
+      "x-amz-target" => "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.#{operation}",
       "content-encoding" => "amz-1.0"
     }
 

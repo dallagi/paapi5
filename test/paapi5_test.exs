@@ -19,7 +19,6 @@ defmodule Paapi5Test do
     response = HTTPoison.request!(request.method, request.url, request.body, request.headers)
 
     assert response.status_code == 200
-
     assert %{
              "SearchResult" => %{
                "Items" => [
@@ -46,5 +45,24 @@ defmodule Paapi5Test do
     response = HTTPoison.request!(request.method, request.url, request.body, request.headers)
 
     assert response.status_code == 200
+  end
+
+  test "supports other operations" do
+    another_operation = "GetItems"
+
+    request =
+      Paapi5.request(
+        @access_key,
+        @secret_key,
+        @partner_tag,
+        :it,
+        another_operation,
+        %{"ItemIds" => ["3730606069"]}
+      )
+
+    response = HTTPoison.request!(request.method, request.url, request.body, request.headers)
+
+    assert response.status_code == 200
+    assert %{"ItemsResult" => %{"Items" => [%{"ASIN" => "3730606069"}]}} = response.body |> Jason.decode!()
   end
 end
