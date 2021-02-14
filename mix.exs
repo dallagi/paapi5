@@ -7,6 +7,7 @@ defmodule Paapi5.MixProject do
   def project do
     [
       app: :paapi5,
+      description: "A minimalistic library for the Amazon Product Advertising Api version 5 (PAAPI5).",
       version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
