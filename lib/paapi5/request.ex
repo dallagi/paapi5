@@ -6,7 +6,7 @@ defmodule Paapi5.Request do
           method: String.t(),
           url: String.t(),
           body: String.t(),
-          headers: keyword()
+          headers: list({String.t(), String.t()})
         }
   defstruct [:method, :url, :body, :headers]
 end
