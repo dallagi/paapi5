@@ -12,7 +12,7 @@ This package can be installed by adding `paapi5` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:paapi5, "~> 0.1.0"}
+    {:paapi5, "~> 0.1.1"}
   ]
 end
 ```
