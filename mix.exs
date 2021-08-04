@@ -2,7 +2,7 @@ defmodule Paapi5.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/dallagi/paapi5"
-  @version "0.1.1"
+  @version "0.1.2"
 
   def project do
     [

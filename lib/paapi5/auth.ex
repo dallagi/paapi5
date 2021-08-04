@@ -106,7 +106,7 @@ defmodule Paapi5.Auth do
   end
 
   def hmac_sha256(key, data) do
-    :crypto.hmac(:sha256, key, data)
+    :crypto.mac(:hmac, :sha256, key, data)
   end
 
   def bytes_to_string(bytes) do
