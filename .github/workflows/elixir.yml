@@ -34,6 +34,6 @@ jobs:
         ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         PARTNER_TAG: ${{ secrets.PARTNER_TAG }}
-      run: mix test
+      run: mix test --trace
     - name: Run dialyzer
       run: mix dialyzer
