@@ -1,6 +1,6 @@
 # Paapi5
 
-![Build](https://img.shields.io/github/workflow/status/dallagi/paapi5/Elixir%20CI)
+![Build](https://img.shields.io/github/actions/workflow/status/dallagi/paapi5/elixir.yml?branch=main)
 ![Hex.pm](https://img.shields.io/hexpm/v/paapi5)
 
  A minimalistic Elixir library for the Amazon Product Advertising Api version 5.
